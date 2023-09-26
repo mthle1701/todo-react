@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import AddTodo from './components/AddTodo';
-import TodoList from './components/TodoList';
-import Header from './components/Header';
+import React, { useState } from "react";
+import styled from "styled-components";
+import AddTodo from "./components/AddTodo";
+import TodoList from "./components/TodoList";
+import Header from "./components/Header";
 
 type Todo = {
   id: number;
@@ -21,7 +21,7 @@ const AppWrapper = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-  width: 320px;  // Largeur définie
+  width: 320px; // Largeur définie
   text-align: center;
 `;
 
@@ -41,12 +41,27 @@ const App: React.FC = () => {
     );
   };
 
+  const deleteTodo = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  const updateTodo = (id: number, newText: string) => {
+    setTodos(
+      todos.map((todo) => (todo.id === id ? { ...todo, text: newText } : todo))
+    );
+  };
+
   return (
     <AppWrapper>
       <Header />
       <ContentWrapper>
         <AddTodo addTodo={addTodo} />
-        <TodoList todos={todos} toggleTodo={toggleTodo} />
+        <TodoList
+          todos={todos}
+          toggleTodo={toggleTodo}
+          deleteTodo={deleteTodo}
+          updateTodo={updateTodo}
+        />
       </ContentWrapper>
     </AppWrapper>
   );

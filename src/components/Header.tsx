@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ const HeaderWrapper = styled.div`
 const Logo = styled.img`
   width: 30rem;
   height: auto;
-  margin-bottom : 2rem;
+  margin-bottom: 2rem;
 `;
 
 const Header: React.FC = () => {
