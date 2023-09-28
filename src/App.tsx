@@ -1,14 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import AddTodo from "./components/AddTodo";
 import TodoList from "./components/TodoList";
 import Header from "./components/Header";
-
-type Todo = {
-  id: number;
-  text: string;
-  completed: boolean;
-};
+import useTodos from "./hooks/useTodos";
 
 const AppWrapper = styled.div`
   display: flex;
@@ -26,30 +21,7 @@ const ContentWrapper = styled.div`
 `;
 
 const App: React.FC = () => {
-  const [todos, setTodos] = useState<Todo[]>([]);
-
-  const addTodo = (text: string) => {
-    const newTodo: Todo = { id: Date.now(), text, completed: false };
-    setTodos([...todos, newTodo]);
-  };
-
-  const toggleTodo = (id: number) => {
-    setTodos(
-      todos.map((todo) =>
-        todo.id === id ? { ...todo, completed: !todo.completed } : todo
-      )
-    );
-  };
-
-  const deleteTodo = (id: number) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
-
-  const updateTodo = (id: number, newText: string) => {
-    setTodos(
-      todos.map((todo) => (todo.id === id ? { ...todo, text: newText } : todo))
-    );
-  };
+  const { todos, addTodo, toggleTodo, deleteTodo, updateTodo } = useTodos();
 
   return (
     <AppWrapper>

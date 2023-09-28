@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import useTodoItem from "../hooks/useTodoItem";
 
 type ItemProps = {
   completed: boolean;
@@ -31,31 +32,35 @@ const TodoItem: React.FC<Props> = ({
   updateTodo,
 }) => {
   
-  const [isEditing, setIsEditing] = useState(false);
-  const [newText, setNewText] = useState(todo.text);
-
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const handleSave = () => {
-    if (newText !== todo.text) {
-      updateTodo(todo.id, newText);
-    }
-    setIsEditing(false);
-  };
+  const {
+    isEditing,
+    newText,
+    handleEdit,
+    handleSave,
+    handleToggle,
+    handleDelete,
+    handleTextChange,
+    handleInputChange,
+    handleDeleteClick,
+  } = useTodoItem({
+    initialText: todo.text,
+    toggleTodo,
+    deleteTodo,
+    updateTodo,
+    id: todo.id,
+  });
 
   return (
     <Item
       completed={todo.completed}
-      onClick={() => !isEditing && toggleTodo(todo.id)}
+      onClick={handleToggle}
     >
       <div>
         {isEditing ? (
           <input
             type="text"
             value={newText}
-            onChange={(e) => setNewText(e.target.value)}
+            onChange={handleTextChange}
             autoFocus
           />
         ) : (
@@ -64,18 +69,12 @@ const TodoItem: React.FC<Props> = ({
       </div>
       <div>
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            isEditing ? handleSave() : handleEdit();
-          }}
+          onClick={handleInputChange}
         >
           {isEditing ? "Save" : "Edit"}
         </button>
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            deleteTodo(todo.id);
-          }}
+          onClick={handleDeleteClick}
         >
           Delete
         </button>
