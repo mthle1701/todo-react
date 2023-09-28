@@ -6,7 +6,7 @@ type Props = {
   todos: { id: number; text: string; completed: boolean }[];
   toggleTodo: (id: number) => void;
   deleteTodo: (id: number) => void;
-  updateTodo: (id: number, text: string) => void; // Ajout de cette ligne
+  updateTodo: (id: number, text: string) => void;
 };
 
 const ListWrapper = styled.div`
